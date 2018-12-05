@@ -12,6 +12,8 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,6 +68,19 @@ public class AnswerController {
                 .map(answer -> {
                     answer.setText(answerRequest.getText());
                     return answerRepository.save(answer);
+                }).orElseThrow(() -> new ResourceNotFoundException("Answer not found with id " + answerId));
+    }
+    
+    @DeleteMapping("/questions/{questionId}/answers/{answerId}")
+    public ResponseEntity<?> deleteAnswer(@PathVariable Long questionId,
+                                          @PathVariable Long answerId) {
+        if (!questionRepository.existsById(questionId)) {
+            throw new ResourceNotFoundException("Question not found with id " + questionId);
+        }
+        return answerRepository.findById(answerId)
+                .map(answer -> {
+                    answerRepository.delete(answer);
+                    return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new ResourceNotFoundException("Answer not found with id " + answerId));
     }
     
