@@ -29,12 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class QuestionController {
     
-    private final QuestionRepository questionRepository;
-    
     @Autowired
-    public QuestionController(QuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
-    }
+    private QuestionRepository questionRepository;
     
     @GetMapping("/questions")
     public Page<Question> getQuestions(Pageable pageable) {

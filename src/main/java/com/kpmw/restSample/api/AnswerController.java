@@ -28,19 +28,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AnswerController {
-
-    private AnswerRepository answerRepository;
-    private QuestionRepository questionRepository;
     
     @Autowired
-    public AnswerController(QuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
-    }
-
+    private AnswerRepository answerRepository;
+    
     @Autowired
-    public AnswerController(AnswerRepository answerRepository) {
-        this.answerRepository = answerRepository;
-    }
+    private QuestionRepository questionRepository;
     
     @GetMapping("/questions/{questionId}/answers")
     public List<Answer> getAnswersByQuestionId(@PathVariable Long questionId) {
