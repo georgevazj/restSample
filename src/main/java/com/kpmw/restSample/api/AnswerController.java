@@ -76,7 +76,5 @@ public class AnswerController {
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new ResourceNotFoundException("Answer not found with id " + answerId));
     }
-    
-    
-    
+
 }
